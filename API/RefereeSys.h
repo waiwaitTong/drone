@@ -20,7 +20,7 @@
 #define USART6_RX_Data             4
 #define USART6_RX_CRC16            5
 
-#define Game_Status_ID              0x0001//TODO DONE
+#define Game_Status_ID              0x0001//TODO DONE//比赛状态数据
 #define GameResultID                0x0002
 #define Robot_HP_ID                 0x0003
 #define DartStatusID                0x0004
@@ -29,18 +29,18 @@
 #define SupplyProjectileActionID    0x0102//TODO 没用
 #define RefereeWaringID             0x0104//TODO 没用
 #define DartRemainingTimeID         0x0105//TODO 没用
-#define Robot_State_ID              0x0201//TODO DONE
-#define Power_Data_ID   			0x0202
+#define Robot_State_ID              0x0201//TODO DONE //机器人性能体系 todo
+#define Power_Data_ID   			0x0202//实时射击热量数据 todo
 #define Robot_Pos_ID    			0x0203//TODO  DONE
 #define BuffID                      0x0204
-#define Drone_Energy_ID 			0x0205//TODO  DONE
+#define Drone_Energy_ID 			0x0205//没用
 #define RobotHurtID                 0x0206
-#define Shoot_Data_ID  		    	0x0207
-#define Ammo_Remain_ID  			0x0208
+#define Shoot_Data_ID  		    	0x0207//实时射击数据 todo
+#define Ammo_Remain_ID  			0x0208//允许发弹量	 todo
 #define RFIDStatusID                0x0209//TODO  没用
 #define DartClientCmdID             0x020A//TODO  没用
-#define Robo_InteractiveCmdID       0x0301//TODO
-#define ROBOT_COMMAND_CMD_ID        0x0304
+#define Robo_InteractiveCmdID       0x0301//TODO //机器人交互数据 todo
+#define ROBOT_COMMAND_CMD_ID        0x0304//键鼠遥控数据 todo
 
 
 #define Sender_ID   Drone_State.robot_id
