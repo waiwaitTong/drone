@@ -22,84 +22,88 @@ u8      shoot_testflag=0;
 FP32    shooterDes=0,shooterDes1=0;
 FP32    Des_supply=0;
 FP32    Supply_Speed_Des=0;
+/*****************************************************
+ * 拨弹电机控制逻辑
+ * （模式调度 → 拨弹闭环 → 输出电流）
+ *****************************************************/
 void SupplyPelletControl(void)
 {
-	if(g_stTestFlag.SupplyPelletTestFlag==FALSE)
-	{
-		if(RC_ON)//(system_monitor.USART1_fps>=60)
-	  {
-		  switch(g_emOperation_Mode)
-		  {
-			  case RC_Mode://遥控Pitch、Yaw
-               Supply_PosPID.fpDes  = Supply_PosPID.fpFB;
-               Supply_SpeedPID.fpU  = 0;	
-               Supply_Speed_Des=0;
-              
-			  break;	
-			  case SingleShoot_Mode:
-				 Gimbal_Control = NO_Aim_Mode;
-//				 Gimbal_RC_Mode();
-				 SupplyMotor_Single_Mode();
-			  break;
-			
-			  case KeyMouse_Mode:
+    /* ========== 测试模式优先级最高 ========== */
+    if (g_stTestFlag.SupplyPelletTestFlag == TRUE)
+    {
+        Supply_PosPID.fpDes = Des_supply;   // 外部测试目标
+        PelletSupply_Loop();                // 闭环执行
+        Send_Current_To_SupplyPelletMotor(CAN2, (SSHORT16)Supply_SpeedPID.fpU);
+        return;                             // 测试模式提前退出
+    }
 
-				   SupplyMotor_KeyMouse_Mode();
-				
-			  break;
-			  case Secuirty_Mode:
-                  
-              break;				
-			  case SpeedShoot_Mode:
-				Gimbal_Control = NO_Aim_Mode;
-//					Gimbal_RC_Mode();
- //         Gimbal_VisionControl_Mode();//视觉打弹用
-				   SupplyMotor_Speed_Mode();
-			  break;		
-				case VisionSpeed_Mode:
-				   SupplyMotor_Speed_Mode();
-					 break;
-				case VisionSingle_Mode:
-				 SupplyMotor_Single_Mode();
+    /* ========== 正常工作模式 ========== */
+    if (!RC_ON)  // 遥控器未连接
+    {
+        Supply_PosPID.fpDes = Supply_PosPID.fpFB;   // 位置保持
+        Supply_SpeedPID.fpU = 0;                    // 停止输出
+        Send_Current_To_SupplyPelletMotor(CAN2, 0);
+        return;
+    }
 
-					 break;
-                case ImageControl_Mode:		
-                    SupplyMotor_KeyMouse_Mode();
+    /* ========== 根据工作模式选择拨弹策略 ========== */
+    switch (g_emOperation_Mode)
+    {
+        case RC_Mode:                     // 遥控器控制（默认静止）
+            Supply_PosPID.fpDes  = Supply_PosPID.fpFB;
+            Supply_SpeedPID.fpU  = 0;
+            Supply_Speed_Des     = 0;
+            break;
 
-			  break; 
-			  default:
-				   Supply_PosPID.fpDes  = Supply_PosPID.fpFB;
-                   Supply_SpeedPID.fpU  = 0;
-                    Supply_Speed_Des=0;
-			  break;
-		  }
-			PelletSupply_Loop();//拨弹电机闭环控制
-			if(g_emOperation_Mode==Secuirty_Mode)//不添加的话由于先进安全模式再进运算，导致原先赋值为0的数重新赋值导致发送电流不为0
-			{
-				Supply_SpeedPID.fpU  = 0;		
-				Supply_PosPID.fpDes  = Supply_PosPID.fpFB;
-			}
-			Send_Current_To_SupplyPelletMotor(CAN2, (SSHORT16)Supply_SpeedPID.fpU);
-	  }
-	 	else  
-		{
-			 Supply_PosPID.fpDes  = Supply_PosPID.fpFB;
-             Supply_SpeedPID.fpU  = 0;
-			 Send_Current_To_SupplyPelletMotor(CAN2, 0);	
-		} 
-           Shootnumber=Supply_PosPID.fpFB/(SupplyStep);
-				
-		
-	}
-    
-	else if (g_stTestFlag.SupplyPelletTestFlag==TRUE)
-	{
-            Supply_PosPID.fpDes=Des_supply;
-			PelletSupply_Loop();//拨弹电机闭环控制
-			Send_Current_To_SupplyPelletMotor(CAN2, (SSHORT16)Supply_SpeedPID.fpU);	
-	}
-			
-			
+        case SingleShoot_Mode:            // 单发
+            Gimbal_Control = NO_Aim_Mode;
+            SupplyMotor_Single_Mode();
+            break;
+
+        case KeyMouse_Mode:               // 键鼠
+            SupplyMotor_KeyMouse_Mode();
+            break;
+
+        case SpeedShoot_Mode:             // 高速连发
+            Gimbal_Control = NO_Aim_Mode;
+            SupplyMotor_Speed_Mode();
+            break;
+
+        case VisionSpeed_Mode:            // 视觉高速连发
+            SupplyMotor_Speed_Mode();
+            break;
+
+        case VisionSingle_Mode:           // 视觉单发
+            SupplyMotor_Single_Mode();
+            break;
+
+        case ImageControl_Mode:           // 图像算法控制（类似键鼠）
+            SupplyMotor_KeyMouse_Mode();
+            break;
+
+        case Secuirty_Mode:               // 安全模式（强制停机）
+            Supply_PosPID.fpDes  = Supply_PosPID.fpFB;
+            Supply_SpeedPID.fpU  = 0;
+            break;
+
+        default:                          // 未知模式 → 安全处理
+            Supply_PosPID.fpDes  = Supply_PosPID.fpFB;
+            Supply_SpeedPID.fpU  = 0;
+            Supply_Speed_Des     = 0;
+            break;
+    }
+
+    /* ========== 闭环控制执行（只要不是安全停机） ========== */
+    if (g_emOperation_Mode != Secuirty_Mode)
+    {
+        PelletSupply_Loop();
+    }
+
+    /* ========== 输出电流 ========== */
+    Send_Current_To_SupplyPelletMotor(CAN2, (SSHORT16)Supply_SpeedPID.fpU);
+
+    /* ========== 更新射击发数统计 ========== */
+    Shootnumber = Supply_PosPID.fpFB / SupplyStep;
 }
 /*--------------------------------------------------------------------------
 函数名：PelletSupply_Loop()
@@ -225,96 +229,85 @@ void SupplyMotor_Single_Mode(void)
 {
   
 
-//	if(FrictionWheel_Ready==TRUE)
-//	{
+	if(FrictionWheel_Ready==TRUE)
+	{
 			if(Freq_Cntsingle > 400)//计时
 			{
 				if(DR16_rec.stRC.Ch2==RC_CH_VALUE_MIN)//左摇杆水平通道364
 				{
 					Supply_PosPID.fpDes = Supply_PosPID.fpDes - (SupplyStep);   //目标值加步长
-                    Supply_Speed_Des=Shoot_des_freq * 0.125 * 60;
-					Freq_Cntsingle = 0;						
+                  	Freq_Cntsingle = 0;						
 				}
 			}
 		  else{	
               Freq_Cntsingle++; 
-              Supply_Speed_Des=0;
           }
 		  Shootencoder = Supply_PosPID.fpFB;
-//	}
-//	else
-//	{
-//		Supply_PosPID.fpDes=Supply_PosPID.fpFB;//不动
-//		Supply_SpeedPID.fpU=0;
-//	}
+	}
+	else
+	{
+		Supply_PosPID.fpDes=Supply_PosPID.fpFB;//不动
+		Supply_SpeedPID.fpU=0;
+	}
 }
 
+
 /*----------------------------------------------------------------------------------------
-函数名:SupplyMotor_Speed_Mode(void)
-功能:固定弹频连发模式
+函数名: SupplyMotor_Speed_Mode()
+功  能: 连发模式
 ----------------------------------------------------------------------------------------*/
 u8 shoot_freq=0;
 int text_shoot_freq=0;
 int shoot_num=0;
 void SupplyMotor_Speed_Mode(void)
 {
-     Supply_Speed_Des=Shoot_des_freq*0.125*60;
-	 freq_test_time++;
-     static FP32 Last_shoottime=0;
-	 shoot_freq=1000/(system_monitor.System_time-Last_shoottime);
-     text_shoot_freq=(int)shoot_freq;
-//		 if(FrictionWheel_Ready==TRUE&&g_stFriction2SMC.fpFB>DesSpeed1-400&&g_stFriction1SMC.fpFB<-(DesSpeed1-400))
-//		 if(g_stFriction2SMC.fpFB>DesSpeed1-400&&g_stFriction1SMC.fpFB<-(DesSpeed1-400))
+	/************** 实际射速测量 **************/
+    freq_test_time++;
+    static float Last_shoot_time = 0;
 
-//        {		
-	if(DR16_rec.stRC.Ch2==RC_CH_VALUE_MIN)//左摇杆水平通道364
-    {
-			//////////////////////////回退
-		if((fabs(Supply_PosPID.fpDes)>fabs(Supply_PosPID.fpFB)+6*SupplyStep)&&fabs(Supply_SpeedPID.fpFB)<60)
-		 {
-			 Supply_PosPID.fpDes = Supply_PosPID.fpFB + SupplyStep;
-		 }
-			 if(shoot_freq<Shoot_des_freq)
-	     {
-                 Supply_PosPID.fpDes -=(SupplyStep);
-		         Last_shoottime=system_monitor.System_time;//记录上次打蛋时间
+    float dt = system_monitor.System_time - Last_shoot_time;
+    if (dt > 0)
+        shoot_freq = 1000.0f / dt;            // 当前射击频率估算
 
-	     }
-     }
-	if(DR16_rec.stRC.Ch2==RC_CH_VALUE_MAX)//左摇杆水平通道max
-    {
-		//////////////////////////回退
-		if((fabs(Supply_PosPID.fpDes)>fabs(Supply_PosPID.fpFB)+6*SupplyStep)&&fabs(Supply_SpeedPID.fpFB)<60)
-		 {
-			 Supply_PosPID.fpDes = Supply_PosPID.fpFB + SupplyStep;
-		 }
-			 if(shoot_freq<Shoot_des_freq)
-	     {
-             if(shoot_num<10)//////////////50连发
-             {
-                 Supply_PosPID.fpDes -=(SupplyStep);
-                 shoot_num++;
-		         Last_shoottime=system_monitor.System_time;//记录上次打蛋时间
-             }
+    text_shoot_freq = (int)shoot_freq;        // 调试显示
 
-	     }
-     }
-    	if(DR16_rec.stRC.Ch2==RC_CH_VALUE_OFFSET)
+   /************** 3. 遥控器触发 **************/
+   uint8_t shoot_trig =
+       (DR16_rec.stRC.Ch2 == RC_CH_VALUE_MIN) ||
+      (DR16_rec.stRC.Ch2 == RC_CH_VALUE_MAX);
 
-            shoot_num=0;
-
-//        if(abs_fl(Supply_PosPID.fpDes-Supply_PosPID.fpFB)>90*SupplyStep)
-//            
-//        Supply_PosPID.fpDes=Supply_PosPID.fpFB-90*SupplyStep;
-//        
-        
-	 		if(freq_test_time >= 1000*30)
+	
+	if(FrictionWheel_Ready==TRUE)//判断摩擦轮速度是否达到目标值
+	{
+		if (shoot_trig)
 		{
-			Shoot_freq=(Shootnumber-Shoot_pre_number)/30;
-			freq_test_time=0;
-			Shoot_pre_number=Shootnumber;	
-		}
+			//限制射击速度
+        	if (shoot_freq < Shoot_des_freq)
+        {
+            // 热量控制
+            if (shoot_num < 300)    // 连续发射限制（按需调）
+            {
+                Supply_PosPID.fpDes -= SupplyStep;//+为反转
+                shoot_num++;
+                Last_shoot_time = system_monitor.System_time;   // 更新射击时间
+            }
+        }
+    }
 }
+    else    // 松开射击键
+    {
+       shoot_num = 0;
+    }
+
+    /************** 统计输出射速（每 30s） **************/
+    if (freq_test_time >= 30000)
+    {
+        Shoot_freq = (Shootnumber - Shoot_pre_number) / 30;
+        freq_test_time = 0;
+        Shoot_pre_number = Shootnumber;
+    }
+}
+
 
 /*----------------------------------------------------------------------------------------
 函数名:SupplyImage_Speed_Mode(void)
@@ -347,6 +340,7 @@ void SupplyImage_Speed_Mode(void)
         Shoot_pre_number=Shootnumber;	
     }
 }
+
 
 
 /*----------------------------------------------------------------------------------------
