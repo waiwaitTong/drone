@@ -5,7 +5,7 @@ FP32 DesSpeed1 = 5850;
 FP32 DesSpeed2 = 5850;	 
 FP32 des_single = 11200; // µ¥Î»£ºr/min
 int SpeedCompensationCnt = 0;
-// float PelletSpeed_mesProcessed = 0.0f;
+// float ShootHeat_RateProcessed = 0.0f;
 ST_SLIDINGWINDOWS bullet_speed_filter = { {0}, {0}, 0 };
 
 

@@ -20,6 +20,14 @@
 #define USART6_RX_Data             4
 #define USART6_RX_CRC16            5
 
+								/*裁判系统协议定义*/
+#define ShootHeat_mes     ((s32)Shoot_Power.shooter_17mm_1_barrel_heat)    //枪口热量
+#define ShootHeat_Rate    ((float)Drone_State.shooter_barrel_cooling_value)//枪口热量冷却
+#define ShootHeat_Limit   ((s32)Drone_State.shooter_barrel_heat_limit) //枪口热量上限
+#define ShootFreq_mes      ((u8)Shoot_Data.bullet_freq)                            //射频
+#define ShootSpeed_mes     ((float)Shoot_Data.bullet_speed)                        //射速
+
+
 #define Game_Status_ID              0x0001//TODO DONE//比赛状态数据
 #define GameResultID                0x0002
 #define Robot_HP_ID                 0x0003
