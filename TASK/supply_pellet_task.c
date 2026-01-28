@@ -283,10 +283,11 @@ void SupplyMotor_Speed_Mode(void)
         	if (shoot_freq < Shoot_des_freq)
         {
             // 热量控制
-
+				if(Is_Heat_Safe){
                 Supply_PosPID.fpDes -= SupplyStep;//+为反转
                 shoot_num++;
                 Last_shoot_time = system_monitor.System_time;   // 更新射击时间
+				}
             }
         }
     }
@@ -349,7 +350,7 @@ bool Is_Heat_Safe(void)
 	static float Last_heat_time = 0.0f;		//上次热量更新的时间
 	s32 Heatlimit = ShootHeat_Limit;      //枪口热量上限
 
-    if(system_monitor.UART5_Rx_fps>4)         //裁判系统帧率正常
+    if(system_monitor.USART2rx_cnt>4)         //裁判系统帧率正常
     {
         if(ShootSpeed_mes != Pre_ShootSpeed)
         {
@@ -370,7 +371,7 @@ bool Is_Heat_Safe(void)
 		
         Heat_Left -=10.0f * (shoot_num - Pre_shoot_num);
 		float dt = system_monitor.System_time - Last_heat_time;
-        Heat_Left += ShooterHeat_Rate * dt / 1000.0f;   //热量恢复，冷却速率为每秒X点热量
+        Heat_Left += ShootHeat_Rate * dt / 1000.0f;   //热量恢复，冷却速率为每秒X点热量
 		Last_heat_time = system_monitor.System_time;
         Heat_Left = Heat_Left<(float)Heatlimit ? Heat_Left:(float)Heatlimit;
         Heat_Left = Heat_Left>0.0f ? Heat_Left:0.0f;    //避免出现负数u8类型溢出
@@ -378,7 +379,7 @@ bool Is_Heat_Safe(void)
         Pre_shoot_num = shoot_num;
     }
 
-    if( Allowed_PelletNum<=1||system_monitor.CAN_Rx_LeftFritionWheel_fps<=0||system_monitor.CAN_Rx_RightFritionWheel_fps<=0  )  return FALSE;  //不允许发送
+    if( Allowed_PelletNum<=1 )  return FALSE;  //不允许发送
     else                        return TRUE;            //允许发射
 }
 
