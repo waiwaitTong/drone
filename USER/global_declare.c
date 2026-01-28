@@ -440,10 +440,9 @@ DBUS_BUFF Mouse_Y = {0};
 
 /*---------------------------------裁判系统---------------------------------------------------*/
 ST_RSYS_MONITOR RSYS_Monitor = {0};
-ext_aerial_robot_energy_t Drone_Energy = {0};								// 能量积累 攻击时间        1
 ext_shoot_data_t Shoot_Data = {0};											// 射击状态                 1
 ext_game_robot_pos_t Drone_Pos = {0};										// 空间位置                 1
-ext_power_heat_data_t Shoot_Current = {0};									// snail电机电流            1
+ext_power_heat_data_t Shoot_Power = {0};									// 当前射击热量值            1
 ext_game_robot_state_t Drone_State = {0};									// 发射机构供电状态 友方阵营 1
 UN_Custom_Robo Custom_Robo_Data = {0};										// 机器人自定义交互数据
 UN_Custom_Client Custom_Client_Data = {0};									// 客户端显示数据

@@ -23,7 +23,7 @@
 #define Game_Status_ID              0x0001//TODO DONE//比赛状态数据
 #define GameResultID                0x0002
 #define Robot_HP_ID                 0x0003
-#define DartStatusID                0x0004
+#define DartInfoID                  0x0105//飞镖发送数据
 #define ICRABuffDebuffZoneStatusID  0x0005
 #define EventDataID                 0x0101//TODO 没用
 #define SupplyProjectileActionID    0x0102//TODO 没用
@@ -33,7 +33,6 @@
 #define Power_Data_ID   			0x0202//实时射击热量数据 todo
 #define Robot_Pos_ID    			0x0203//TODO  DONE
 #define BuffID                      0x0204
-#define Drone_Energy_ID 			0x0205//没用
 #define RobotHurtID                 0x0206
 #define Shoot_Data_ID  		    	0x0207//实时射击数据 todo
 #define Ammo_Remain_ID  			0x0208//允许发弹量	 todo

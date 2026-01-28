@@ -504,7 +504,7 @@ void Rc_RsysProtocol(USHORT16 rxSize)
 	}
 }
 /*****************************************2026修改***********************************************
-1. 
+1. 修改命令码0x0003
 /*****************************************2024修改***********************************************
 1. 修订命令码 0x0101、0x0201、0x0203、0x0209、0x020A、0x0303
 2. 修订已知的数据段长度不一致或结构体定义错误
@@ -536,16 +536,12 @@ void MonitorDataDeal(USHORT16 usCmdID)
 		RSYS_Monitor.GameRobotStatus_cnt++;
 		break;
 	case Power_Data_ID:
-		memcpy(&Shoot_Current, &USART2_Rx_Buf[7], usDataLength);
+		memcpy(&Shoot_Power, &USART2_Rx_Buf[7], usDataLength);
 		RSYS_Monitor.PowerHeatData_cnt++;
 		break;
 	case Robot_Pos_ID:
 		memcpy(&Drone_Pos, &USART2_Rx_Buf[7], usDataLength);
 		RSYS_Monitor.GameRobotPos_cnt++;
-		break;
-	case Drone_Energy_ID:
-		memcpy(&Drone_Energy, &USART2_Rx_Buf[7], usDataLength);
-		RSYS_Monitor.AerialRobotEnergy_cnt++;
 		break;
 	case Shoot_Data_ID:
 		memcpy(&Shoot_Data, &USART2_Rx_Buf[7], usDataLength);
