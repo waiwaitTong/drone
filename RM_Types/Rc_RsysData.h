@@ -38,14 +38,14 @@ typedef union
  */
 typedef __packed struct 
 {  
-uint16_t ally_1_robot_HP;  
-uint16_t ally_2_robot_HP;  
-uint16_t ally_3_robot_HP;  
-uint16_t ally_4_robot_HP;  
-uint16_t reserved;  
-uint16_t ally_7_robot_HP;  
-uint16_t ally_outpost_HP;  
-uint16_t ally_base_HP; 
+	USHORT16 red_1_robot_HP;
+	USHORT16 red_2_robot_HP;
+	USHORT16 red_3_robot_HP;
+	USHORT16 red_4_robot_HP; 
+	USHORT16 reservedhp;  
+	USHORT16 red_7_robot_HP; 
+	USHORT16 red_outpost_HP;  
+	USHORT16 red_base_HP; 
 } ext_game_robot_HP_t;
 typedef union
 {

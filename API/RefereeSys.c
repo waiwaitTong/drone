@@ -896,67 +896,67 @@ void Send_Custom_Data(void)
 //	if (RSYS_Monitor.GameStatus_fps != 0) // 裁判系统是否连接到服务器
 //		Clinet_Link = 1;
 	
-	if((int)(unAimData.stEnemyE.target_num)==0)
-                {
-                    hp_print = 0;
-                }
-                if((int)(unAimData.stEnemyE.target_num)==1)
-                {
-                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
-                    hp_print = Robot_HP.blue_1_robot_HP;
-                    
-                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
-                    hp_print = Robot_HP.red_1_robot_HP;
-                }
-                if((int)(unAimData.stEnemyE.target_num)==2)
-                {
-                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
-                    hp_print = Robot_HP.blue_2_robot_HP;
-                    
-                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
-                    hp_print = Robot_HP.red_2_robot_HP;
-                }
-                if((int)(unAimData.stEnemyE.target_num)==3)
-                {
-                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
-                    hp_print = Robot_HP.blue_3_robot_HP;
-                    
-                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
-                    hp_print = Robot_HP.red_3_robot_HP;
-                }
-                if((int)(unAimData.stEnemyE.target_num)==4)
-                {
-                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
-                    hp_print = Robot_HP.blue_4_robot_HP;
-                    
-                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
-                    hp_print = Robot_HP.red_4_robot_HP;
-                }
-            
-                if((int)(unAimData.stEnemyE.target_num)==6)//前哨
-                {
-                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
-                    hp_print = Robot_HP.blue_outpost_HP;
-                    
-                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
-                    hp_print = Robot_HP.red_outpost_HP;
-                }
-                if((int)(unAimData.stEnemyE.target_num)==7)//哨兵
-                {
-                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
-                    hp_print = Robot_HP.blue_7_robot_HP;
-                    
-                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
-                    hp_print = Robot_HP.red_7_robot_HP;
-                }
-                if((int)(unAimData.stEnemyE.target_num)==8)//基地
-                {
-                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
-                    hp_print = Robot_HP.blue_base_HP;
-                    
-                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
-                    hp_print = Robot_HP.red_base_HP;
-                }
+//	if((int)(unAimData.stEnemyE.target_num)==0)
+//                {
+//                    hp_print = 0;
+//                }
+//                if((int)(unAimData.stEnemyE.target_num)==1)
+//                {
+//                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
+//                    hp_print = Robot_HP.blue_1_robot_HP;
+//                    
+//                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
+//                    hp_print = Robot_HP.red_1_robot_HP;
+//                }
+//                if((int)(unAimData.stEnemyE.target_num)==2)
+//                {
+//                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
+//                    hp_print = Robot_HP.blue_2_robot_HP;
+//                    
+//                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
+//                    hp_print = Robot_HP.red_2_robot_HP;
+//                }
+//                if((int)(unAimData.stEnemyE.target_num)==3)
+//                {
+//                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
+//                    hp_print = Robot_HP.blue_3_robot_HP;
+//                    
+//                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
+//                    hp_print = Robot_HP.red_3_robot_HP;
+//                }
+//                if((int)(unAimData.stEnemyE.target_num)==4)
+//                {
+//                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
+//                    hp_print = Robot_HP.blue_4_robot_HP;
+//                    
+//                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
+//                    hp_print = Robot_HP.red_4_robot_HP;
+//                }
+//            
+//                if((int)(unAimData.stEnemyE.target_num)==6)//前哨
+//                {
+//                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
+//                    hp_print = Robot_HP.blue_outpost_HP;
+//                    
+//                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
+//                    hp_print = Robot_HP.red_outpost_HP;
+//                }
+//                if((int)(unAimData.stEnemyE.target_num)==7)//哨兵
+//                {
+//                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
+//                    hp_print = Robot_HP.blue_7_robot_HP;
+//                    
+//                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
+//                    hp_print = Robot_HP.red_7_robot_HP;
+//                }
+//                if((int)(unAimData.stEnemyE.target_num)==8)//基地
+//                {
+//                    if(G_ST_Vision.Send.head[2] == 0x09    )// 红方ID 7    (识别蓝色)
+//                    hp_print = Robot_HP.blue_base_HP;
+//                    
+//                    if(G_ST_Vision.Send.head[2] == 0x0A    )// 蓝方ID 17    (识别红色)
+//                    hp_print = Robot_HP.red_base_HP;
+//                }
 	
 	
 	if (system_monitor.USART2rx_fps > 0)
