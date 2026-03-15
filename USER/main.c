@@ -4,10 +4,9 @@ DECLARE_RM_OS_FLAG(); // 定义事件标志组
 
 int main(void)
 
-
-{
+ 	{
 	BSP_Init(); // 外设初始化
-	CREATE_OS_TASK(StartTask); 
+	CREATE_OS_TASK(StartTask);
 	vTaskStartScheduler(); // 开启任务调度
 }
 

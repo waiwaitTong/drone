@@ -10,7 +10,7 @@
 #include "math.h"
 #define radian                    57.29578f  //弧度转化为度 180/pi
 #define MouseSST_Pitch            0.0015f     //PITCH轴鼠标灵敏度
-#define MouseSST_Yaw              0.0015f     //YAW轴鼠标灵敏度  
+#define MouseSST_Yaw              0.0015f     //YAW轴鼠标灵敏度 
 #define RCSST_Pitch               0.0001f    //PITCH轴遥控器灵敏度
 #define RCSST_Yaw                 0.0001f    //YAW轴遥控器灵敏
 #define SHEPIN_Shooter            0.0002f
@@ -19,10 +19,10 @@
 #define Pitch_Compensation_Step_Vision   0.005f     //手动补偿步进角度
 #define Yaw_Compensation_Step_Vision      0.005f
 
-#define Pitch_Limit_Up            30.0f//14.0！！！！
-#define Pitch_Limit_Down          -95.0f  //-28.0！！！
-#define Yaw_Limit_Up              55.0f//57.0f
-#define Yaw_Limit_Down            -55.0f//-53.0f
+#define Pitch_Limit_Up            20.0f//14.0！！！！
+#define Pitch_Limit_Down          -70.0f  //-28.0！！！
+#define Yaw_Limit_Up              85.0f//57.0f
+#define Yaw_Limit_Down            -80.0f//-53.0f
 #define Roll_Limit_Up              5.0f//57.0f
 #define Roll_Limit_Down            -5.0f//-53.0f
 

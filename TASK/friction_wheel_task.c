@@ -5,7 +5,7 @@ FP32 DesSpeed1 = 5850;
 FP32 DesSpeed2 = 5850;	 
 FP32 des_single = 11200; // 单位：r/min
 int SpeedCompensationCnt = 0;
-// float ShootHeat_RateProcessed = 0.0f;
+// float PelletSpeed_mesProcessed = 0.0f;
 ST_SLIDINGWINDOWS bullet_speed_filter = { {0}, {0}, 0 };
 
 
@@ -95,9 +95,13 @@ void FrictionWheelControl(void)
 ------------------------------------------------------------*/
 void FrictionWheel_RC_Mode(void)
 {
-
+	//	static float PelletSpeed_mesPre = 0.0f;
+	//	if (system_monitor.CAN2_fps > 3000) // 遥控器模式下过检录
+	//	{
+//        if(Start_flag)
+//        {
 		FrictionWheel_Ready_cnt++;
-		if (FrictionWheel_Ready_cnt > 1000 && g_stFriction2SMC.fpFB >DesSpeed1-500 && g_stFriction1SMC.fpFB < -(DesSpeed1-500)) // 改为反馈值大于阈值
+		if (FrictionWheel_Ready_cnt > 1000 && g_stFriction2SMC.fpFB >DesSpeed1-400 && g_stFriction1SMC.fpFB < -(DesSpeed1-400)) // 改为反馈值大于阈值
 		{
 			FrictionWheel_Ready = TRUE;
 		}
@@ -108,7 +112,50 @@ void FrictionWheel_RC_Mode(void)
        
         
 		intRampSignal(DesSpeed1, DesSpeed2, 1);
+//        }
+	//	        if(PelletSpeed_mes!=PelletSpeed_mesPre)
+	//			{
+	//			  G_ST_Vision.Send.bullet_speed = SlidingWindowFilter(&FW_GetPelletSpeed_Filter, PelletSpeed_mes);//滑动窗口滤波
+	//			}
+	//
+	//        if(PelletSpeed_mes!=PelletSpeed_mesPre)
+	//		{
+		
+		
+//	//////////////////////////////////////自动调整摩擦轮转速？（未测试）	
+//		if(Shoot_Data.bullet_speed<=20.0f)
+//		{
+//			SpeedCompensationCnt++;
+//			if(SpeedCompensationCnt>=500)
+//			{
+//				DesSpeed1 += 50;
+//				DesSpeed2 += 50;
+//				SpeedCompensationCnt = 0;
+//			}
+//		}
+//		if(Shoot_Data.bullet_speed>=24.2f)
+//		{
+//			SpeedCompensationCnt++;
+//			if(SpeedCompensationCnt>=500)
+//			{
+//				DesSpeed1 -= 50;
+//				DesSpeed2 -= 50;
+//				SpeedCompensationCnt = 0;
+//			}
+//		}
+//		
+		
+		
+	//
+	//        }
+	//	      	PelletSpeed_mesPre = PelletSpeed_mes;
 
+	//	}
+	//	else
+	//	{
+	//		PWM1=500;
+	//	    PWM2=500;
+	//	}
 }
 /*------------------------------------------------------------
 函 数 名：FrictionWheel_KeyMouse_Mode()
@@ -165,8 +212,8 @@ int fric_flag = 0;
 void intRampSignal(FP32 DesValue1, FP32 DesValue2, UINT32 Step)
 {
 
-	g_stFriction1SMC.fpDes = DesValue1;
-	g_stFriction2SMC.fpDes = -DesValue2;
+	g_stFriction1SMC.fpDes = -DesValue1;
+	g_stFriction2SMC.fpDes = DesValue2;
 
 	CalSMC(&g_stFriction1SMC);
 	CalSMC(&g_stFriction2SMC);

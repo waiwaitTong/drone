@@ -36,30 +36,38 @@ typedef union
 /** 机器人血量数据：0x0003   发送频率：1Hz
  * @brief	提供各队机器人血量数据
  */
-typedef __packed struct 
-{  
+typedef __packed struct
+{
 	USHORT16 red_1_robot_HP;
 	USHORT16 red_2_robot_HP;
 	USHORT16 red_3_robot_HP;
-	USHORT16 red_4_robot_HP; 
-	USHORT16 reservedhp;  
-	USHORT16 red_7_robot_HP; 
-	USHORT16 red_outpost_HP;  
-	USHORT16 red_base_HP; 
-} ext_game_robot_HP_t;
+	USHORT16 red_4_robot_HP;
+	USHORT16 red_5_robot_HP;
+	USHORT16 red_7_robot_HP;
+	USHORT16 red_outpost_HP; // 前哨站
+	USHORT16 red_base_HP;	 // 基地
+	USHORT16 blue_1_robot_HP;
+	USHORT16 blue_2_robot_HP;
+	USHORT16 blue_3_robot_HP;
+	USHORT16 blue_4_robot_HP;
+	USHORT16 blue_5_robot_HP;
+	USHORT16 blue_7_robot_HP;
+	USHORT16 blue_outpost_HP;
+	USHORT16 blue_base_HP;
+} ext_game_robot_HP_t; // 0x0003 血量数据 32字节
 typedef union
 {
-	UCHAR8 ucBuf[16];
+	UCHAR8 ucBuf[32];
 	ext_game_robot_HP_t stGameRobotHPInfo;
 } UN_GameRobotHP;
 
-/** 飞镖发送状态：0x105    发送频率：飞镖发射后发送    发送范围：所有机器人
+/** 飞镖发送状态：0x0004    发送频率：飞镖发射后发送    发送范围：所有机器人
  *  @brief	敌方飞镖发射状态//在新的裁判系统串口协议里面没看到？//2023未看到
  */
 typedef __packed struct
 {
-	uint8_t dart_remaining_time; 
-  	uint16_t dart_info;
+	uint8_t dart_belong;
+	uint16_t Stage_remaining_time;
 } ext_dart_status_t;
 typedef union
 {
@@ -147,6 +155,34 @@ typedef union
 } UN_DartRemainingTime;
 
 /** 比赛机器人状态：0x0201   发送频率：10Hz */
+// typedef __packed struct
+//{
+//    UCHAR8 robot_id;         //本机器人 ID
+//    UCHAR8 robot_level;      //机器人等级
+//    USHORT16 remain_HP;      //机器人剩余血量
+//    USHORT16 max_HP;         //机器人上限血量
+//    USHORT16 shooter_id1_17mm_cooling_rate;   //机器人 1 号 17mm 枪口每秒冷却值
+//    USHORT16 shooter_id1_17mm_cooling_limit;  //机器人 1 号 17mm 枪口热量上限
+//    USHORT16 shooter_id1_17mm_speed_limit;    //机器人 1 号 17mm 枪口上限速度 单位 m/s
+//
+//    USHORT16 shooter_id2_17mm_cooling_rate;   //机器人 2 号 17mm 枪口每秒冷却值
+//    USHORT16 shooter_id2_17mm_cooling_limit;  //机器人 2 号 17mm 枪口热量上限
+//    USHORT16 shooter_id2_17mm_speed_limit;    //机器人 2 号 17mm 枪口上限速度 单位 m/s
+//
+//	 USHORT16 shooter_id1_42mm_cooling_rate;   //机器人 42mm 枪口每秒冷却值
+//	 USHORT16 shooter_id1_42mm_cooling_limit;  //机器人 42mm 枪口热量上限
+//	 USHORT16 shooter_id1_42mm_speed_limit;    //机器人 42mm 枪口上限速度 单位 m/s
+//
+//    USHORT16 chassis_power_limit;              //机器人底盘功率限制上限
+//    UCHAR8 mains_power_gimbal_output : 1;   //gimbal口输出:1有输出0无输出
+//    UCHAR8 mains_power_chassis_output : 1; //chassis口输出:1有输出0无输出
+//    UCHAR8 mains_power_shooter_output : 1; //shooter口输出:1有输出0无输出
+// } ext_game_robot_state_t;
+// typedef union
+//{
+//	UCHAR8 ucBuf[29];
+//	ext_game_robot_state_t stGameRobotStatusInfo;
+// } UN_GameRobotStatus;
 
 typedef __packed struct
 {
@@ -167,15 +203,16 @@ typedef union
 	ext_game_robot_state_t stGameRobotStatusInfo;
 } UN_GameRobotStatus;
 
-/** 实时功率热量数据：0x0202  发送频率：10Hz */
+/** 实时功率热量数据：0x0202  发送频率：50Hz */
 typedef __packed struct
 {
-	uint16_t reserved1; 
-	uint16_t reserved2; 
-	float reserved3; 
-	uint16_t buffer_energy; 
-	uint16_t shooter_17mm_1_barrel_heat; //第一个发射机构的射击热量
-	uint16_t shooter_42mm_barrel_heat; 
+	USHORT16 chassis_volt;					// 底盘电压
+	USHORT16 chassis_current;				// 底盘电流
+	FP32 chassis_power;						// 底盘输出功率
+	USHORT16 chassis_power_buffer;			// 底盘功率缓冲
+	USHORT16 shooter_id1_17mm_cooling_heat; // 1 号 17mm 枪口热量
+	USHORT16 shooter_id2_17mm_cooling_heat; // 2 号 17mm 枪口热量
+	USHORT16 shooter_id1_42mm_cooling_heat; // 42mm枪口热量
 } ext_power_heat_data_t;
 typedef union
 {
@@ -183,7 +220,7 @@ typedef union
 	ext_power_heat_data_t stPowerHeatDataInfo;
 } UN_PowerHeatData;
 
-/** 机器人位置：0x0203     发送频率：1Hz */
+/** 机器人位置：0x0203     发送频率：10Hz */
 typedef __packed struct
 {
 	FP32 x;	  // 位置坐标x,单位m
@@ -196,7 +233,7 @@ typedef union
 	ext_game_robot_pos_t stGameRobotPosInfo;
 } UN_GameRobotPos;
 
-/** 机器人增益：0x0204     发送频率：3Hz */
+/** 机器人增益：0x0204     发送频率：1Hz */
 typedef __packed struct
 {
 	UCHAR8 power_rune_buff;
@@ -206,6 +243,20 @@ typedef union
 	UCHAR8 ucBuf[1];
 	ext_buff_t stBuffInfo;
 } UN_Buff;
+
+/** 空中机器人能量状态：0x0205     发送频率：10Hz */
+// 无人机裁判系统通讯数据格式定义
+typedef __packed struct
+{
+	UCHAR8 airforce_status; // 飞机状态（0 为正在冷却，1 为冷却完毕，2 为正在空中支援）
+	UCHAR8 time_remain;		// 此状态的剩余时间（单位为：秒，向下取整，即冷却时间剩余 1.9 秒时，此值为 1）若冷却时间为 0，但未呼叫空中支援，则该值为 0
+} ext_aerial_robot_energy_t;
+typedef union
+{
+	UCHAR8 ucBuf[2];
+	ext_aerial_robot_energy_t stAerialRobotEnergyInfo;
+} UN_AerialRobotEnergy;
+
 /** 伤害状态：0x0206          发送频率：伤害发生后发送 */
 typedef __packed struct
 {
@@ -246,15 +297,14 @@ typedef union
 	ext_bullet_remaining_t stBulletRemainingInfo;
 } UN_BulletRemaining;
 
-/** 机器人RFID状态：0x0209     发送频率：3Hz    发送范围：单一机器人 */
+/** 机器人RFID状态：0x0209     发送频率：1Hz    发送范围：单一机器人 */
 typedef __packed struct
 {
-	 uint32_t rfid_status;  
-     uint8_t rfid_status_2; 
+	UINT32 rfid_status;
 } ext_rfid_status_t;
 typedef union
 {
-	UCHAR8 ucBuf[5];
+	UCHAR8 ucBuf[4];
 	ext_rfid_status_t stRFIDStatusInfo;
 } UN_RFIDStatus;
 

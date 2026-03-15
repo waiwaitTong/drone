@@ -11,8 +11,8 @@ FP32 BMIYawSpeed;
 IMU_MODE imu_mode = INIT;
 /*限幅变量*/
 FP32 Pitch_Limit_Up_imu = 10;   // 10
-FP32 Pitch_Limit_Down_imu = -25; //-25
-FP32 Yaw_Limit_Up_imu = 30;
+FP32 Pitch_Limit_Down_imu = -20; //-25
+FP32 Yaw_Limit_Up_imu = 40;
 FP32 Yaw_Limit_Down_imu = -25;
 FP32 Roll_Limit_Up_imu = 15;
 FP32 Roll_Limit_Down_imu = -15;
@@ -59,8 +59,8 @@ ST_PID Yaw_PosPID_1 = {0, 0, 30, 0.06, 1000, 0, 0, 0, 0, 0, 0, 0, 29000, 3000, 5
 TD yaw_td_1 = {0, 0, 0, 10000, 0.001, 0};	
 
 // pitch朝下时
-ST_PID Pitch_SpeedPID_2 = {0, 0, 6.5, 0, 120, 0, 0, 0, 0, 0, 0, 0, 30000, 28000, 5000, 5000, 500}; 
-ST_PID Pitch_PosPID_2 = {0, 0, 30, 0.001, 50, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 500, 500, 2};
+ST_PID Pitch_SpeedPID_2 = {0, 0, 55, 0, 1000, 0, 0, 0, 0, 0, 0, 0, 30000, 28000, 5000, 5000, 500}; 
+ST_PID Pitch_PosPID_2 = {0, 0, 30, 0.001, 100, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 500, 500, 2};
 TD pitch_td_2 = {0, 0, 0, 10000, 0.001, 0};
 
 ST_PID Yaw_SpeedPID_2 = {0, 0, 50, 0, 800, 0, 0, 0, 0, 0, 0, 0, 30000, 28000, 5000, 5000, 500};	
@@ -72,12 +72,9 @@ TD yaw_td_2 = {0, 0, 0, 1500, 0.001, 0};////////zuixia
 
 
 
-// 老
-//ST_PID Pitch_SpeedPID_3 = {0, 0, 5, 0, 40, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 2000, 2000, 500};
-//ST_PID Pitch_PosPID_3 = {0, 0, 20, 0.001, 75, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 500, 500, 2};
-//TD pitch_td_3 = {0, 0, 0, 10000, 0.001, 0};
-ST_PID Pitch_SpeedPID_3 = {0, 0, 7, 0, 75, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 2000, 2000, 500};
-ST_PID Pitch_PosPID_3 = {0, 0, 30, 0.05, 120, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 500, 500, 2};
+// yaw朝right时
+ST_PID Pitch_SpeedPID_3 = {0, 0, 5, 0, 40, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 2000, 2000, 500};
+ST_PID Pitch_PosPID_3 = {0, 0, 20, 0.001, 75, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 500, 500, 2};
 TD pitch_td_3 = {0, 0, 0, 10000, 0.001, 0};
 
 ST_PID Yaw_SpeedPID_3 = {0, 0, 110, 0, 800, 0, 0, 0, 0, 0, 0, 0, 30000, 28000, 5000, 5000, 500};	
@@ -183,12 +180,12 @@ TD yaw_td_3 = {0, 0, 0, 1500, 0.001, 0};
 //ST_PID Pitch_PosPID = {0, 0, 28, 0.001, 110, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 500, 500, 2};
 //TD pitch_td = {0, 0, 0, 10000, 0.001, 0};
 ST_PID Pitch_SpeedPID ={0, 0, 6, 0, 40, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 2000, 2000, 500};
-ST_PID Pitch_PosPID = {0, 0, 20, 0.06, 75, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 1000, 500, 4};
+ST_PID Pitch_PosPID = {0, 0, 20, 0.06, 75, 0, 0, 0, 0, 0, 0, 0, 2048, 2000, 500, 500, 2};
 TD pitch_td = {0, 0, 0, 10000, 0.001, 0};
 
 
-ST_PID Yaw_SpeedPID ={0, 0, 45, 0, 150, 0, 0, 0, 0, 0, 0, 0, 30000, 28000, 5000, 5000, 500}; 
-ST_PID Yaw_PosPID = {0, 0, 30, 0.005, 100, 0, 0, 0, 0, 0, 0, 0, 29000, 3000, 500, 3000, 1};     
+ST_PID Yaw_SpeedPID ={0, 0, 55, 0, 1000, 0, 0, 0, 0, 0, 0, 0, 30000, 28000, 5000, 5000, 500}; 
+ST_PID Yaw_PosPID = {0, 0, 30, 0.005, 1000, 0, 0, 0, 0, 0, 0, 0, 29000, 3000, 500, 3000, 1};     
 TD yaw_td = {0, 0, 0, 10000, 0.001, 0};
 
 
@@ -440,9 +437,10 @@ DBUS_BUFF Mouse_Y = {0};
 
 /*---------------------------------裁判系统---------------------------------------------------*/
 ST_RSYS_MONITOR RSYS_Monitor = {0};
+ext_aerial_robot_energy_t Drone_Energy = {0};								// 能量积累 攻击时间        1
 ext_shoot_data_t Shoot_Data = {0};											// 射击状态                 1
 ext_game_robot_pos_t Drone_Pos = {0};										// 空间位置                 1
-ext_power_heat_data_t Shoot_Power = {0};									// 当前射击热量值            1
+ext_power_heat_data_t Shoot_Current = {0};									// snail电机电流            1
 ext_game_robot_state_t Drone_State = {0};									// 发射机构供电状态 友方阵营 1
 UN_Custom_Robo Custom_Robo_Data = {0};										// 机器人自定义交互数据
 UN_Custom_Client Custom_Client_Data = {0};									// 客户端显示数据

@@ -63,7 +63,7 @@ void GimbalControl(void)
 				break;
 			case KeyMouse_Mode:
 				Gimbal_KeyMouse_Mode();
- 				break;
+				break;
 			case VisionControl_Mode:
 				Gimbal_VisionControl_Mode();
 				break;
@@ -132,23 +132,14 @@ void GimbalControl(void)
 				cnt_automatic++;
 
 				if (cnt_automatic == 1)
-					Des += 5;
+					Des += 3;
 				if (cnt_automatic == 1000)
-					Des += 5;
+					Des += 3;
 				if (cnt_automatic == 2000)
-					Des += 5;
+					Des -= 3;
 				if (cnt_automatic == 3000)
-					Des += 5;
-					if (cnt_automatic ==4000 )
-					Des -= 5;
-				if (cnt_automatic == 5000)
-					Des -= 5;
-				if (cnt_automatic == 6000)
-					Des -= 5;
-				if (cnt_automatic == 7000)
-					Des -= 5;
-		
-				if (cnt_automatic == 8000)
+					Des -= 3;
+				if (cnt_automatic == 4000)
 					cnt_automatic = 0;
 			}
 			if (automatic1 == 1)
@@ -156,13 +147,13 @@ void GimbalControl(void)
 				cnt_automatic++;
 
 				if (cnt_automatic == 1)
-					Des1 += 5;
+					Des1 += 3;
 				if (cnt_automatic == 1000)
-					Des1 += 5;
+					Des1 += 3;
 				if (cnt_automatic == 2000)
-					Des1 -= 5;
+					Des1 -= 3;
 				if (cnt_automatic == 3000)
-					Des1 -= 5;
+					Des1 -= 3;
 				if (cnt_automatic == 4000)
 					cnt_automatic = 0;
 			}
@@ -414,14 +405,14 @@ void Gimbal_Loop(void)
 //					if (ARM_LK_Motor2.angle < 2 ) // 20-40
 //	{
 //	
-//		Pitch_SpeedPID.fpKp = Pitch_SpeedPID_2.fpKp;
-//		Pitch_SpeedPID.fpKd = Pitch_SpeedPID_2.fpKd;
+//		Pitch_SpeedPID.fpKp = Pitch_SpeedPID_1.fpKp;
+//		Pitch_SpeedPID.fpKd = Pitch_SpeedPID_1.fpKd;
 //		
-//		Pitch_PosPID.fpKp = Pitch_PosPID_2.fpKp;
-//		Pitch_PosPID.fpKi = Pitch_PosPID_2.fpKi;
-//		Pitch_PosPID.fpKd = Pitch_PosPID_2.fpKd;
+//		Pitch_PosPID.fpKp = Pitch_PosPID_1.fpKp;
+//		Pitch_PosPID.fpKi = Pitch_PosPID_1.fpKi;
+//		Pitch_PosPID.fpKd = Pitch_PosPID_1.fpKd;
 //		
-//		pitch_td.r = pitch_td_2.r;
+//		pitch_td.r = pitch_td_1.r;
 //	}
 //	
 //						if (ARM_LK_Motor2.angle >= 2 && ARM_LK_Motor2.angle < 16) // 20-40
@@ -449,31 +440,18 @@ void Gimbal_Loop(void)
 //		
 //		pitch_td.r = pitch_td_1.r;
 //	}
-	
-							if (Pitch_PosPID.fpDes>=-60 ) // 
-	{
-	
-		Pitch_SpeedPID.fpKp = Pitch_SpeedPID_3.fpKp;
-		Pitch_SpeedPID.fpKd = Pitch_SpeedPID_3.fpKd;
-		
-		Pitch_PosPID.fpKp = Pitch_PosPID_3.fpKp;
-		Pitch_PosPID.fpKi = Pitch_PosPID_3.fpKi;
-		Pitch_PosPID.fpKd = Pitch_PosPID_3.fpKd;
-		
-		pitch_td.r = pitch_td_2.r;
-	}
-//									if (Pitch_PosPID.fpDes<-20) // 20-40
+//	
+//							if (ARM_LK_Motor2.angle >= 15 && ARM_LK_Motor2.angle < 60) // 20-40
 //	{
 //	
-//		Pitch_SpeedPID.fpKp = Pitch_SpeedPID_2.fpKp;
-//		Pitch_SpeedPID.fpKd = Pitch_SpeedPID_2.fpKd;
+//		Pitch_SpeedPID.fpKp = Pitch_SpeedPID_3.fpKp;
+//		Pitch_SpeedPID.fpKd = Pitch_SpeedPID_3.fpKd;
 //		
-//		Pitch_PosPID.fpKp = Pitch_PosPID_2.fpKp;
-//		Pitch_PosPID.fpKi = Pitch_PosPID_2.fpKi;
-//		Pitch_PosPID.fpKd = Pitch_PosPID_2.fpKd;
+//		Pitch_PosPID.fpKp = Pitch_PosPID_3.fpKp;
+//		Pitch_PosPID.fpKi = Pitch_PosPID_3.fpKi;
+//		Pitch_PosPID.fpKd = Pitch_PosPID_3.fpKd;
 //		
 //		pitch_td.r = pitch_td_2.r;
-//	}
 //		
 //		if(Yaw_encode>28&&Yaw_encode<60)
 //		{
@@ -536,29 +514,29 @@ void Gimbal_Loop(void)
 //}
 	
 //	pit>21   yaw>28
-//	if(ARM_LK_Motor2.angle>-25 && ARM_LK_Motor2.angle<=30 )
-//	{
-//		Yaw_SpeedPID.fpKp = Yaw_SpeedPID_1.fpKp ;
-//		Yaw_SpeedPID.fpKd = Yaw_SpeedPID_1.fpKd;
-//		
-//		Yaw_PosPID.fpKp = Yaw_PosPID_1.fpKp;
-//		Yaw_PosPID.fpKi = Yaw_PosPID_1.fpKi;
-//		Yaw_PosPID.fpKd = Yaw_PosPID_1.fpKd;
-//		
-//		yaw_td.r = yaw_td_1.r;
-//		
-//	}
-//		
-//		if (ARM_LK_Motor2.angle>30 && ARM_LK_Motor2.angle<65 ) // 20-40
-//	{
-//		Yaw_SpeedPID.fpKp = Yaw_SpeedPID_1.fpKp ;
-//		Yaw_SpeedPID.fpKd = Yaw_SpeedPID_1.fpKd *cos(ARM_LK_Motor2.angle/57.3f);
-//		
-//		Yaw_PosPID.fpKp = Yaw_PosPID_1.fpKp;
-//		Yaw_PosPID.fpKi = Yaw_PosPID_1.fpKi;
-//		Yaw_PosPID.fpKd = Yaw_PosPID_1.fpKd*cos(ARM_LK_Motor2.angle/57.3f)*cos(ARM_LK_Motor2.angle/57.3f);
-//		
-//		yaw_td.r = yaw_td_1.r;
+	if(ARM_LK_Motor2.angle>-25 && ARM_LK_Motor2.angle<=30 )
+	{
+		Yaw_SpeedPID.fpKp = Yaw_SpeedPID_1.fpKp ;
+		Yaw_SpeedPID.fpKd = Yaw_SpeedPID_1.fpKd;
+		
+		Yaw_PosPID.fpKp = Yaw_PosPID_1.fpKp;
+		Yaw_PosPID.fpKi = Yaw_PosPID_1.fpKi;
+		Yaw_PosPID.fpKd = Yaw_PosPID_1.fpKd;
+		
+		yaw_td.r = yaw_td_1.r;
+		
+	}
+		
+		if (ARM_LK_Motor2.angle>30 && ARM_LK_Motor2.angle<65 ) // 20-40
+	{
+		Yaw_SpeedPID.fpKp = Yaw_SpeedPID_1.fpKp ;
+		Yaw_SpeedPID.fpKd = Yaw_SpeedPID_1.fpKd *cos(ARM_LK_Motor2.angle/57.3f);
+		
+		Yaw_PosPID.fpKp = Yaw_PosPID_1.fpKp;
+		Yaw_PosPID.fpKi = Yaw_PosPID_1.fpKi;
+		Yaw_PosPID.fpKd = Yaw_PosPID_1.fpKd*cos(ARM_LK_Motor2.angle/57.3f)*cos(ARM_LK_Motor2.angle/57.3f);
+		
+		yaw_td.r = yaw_td_1.r;
 		
 //		if(Yaw_encode>35&&Yaw_encode<85)
 //		{
@@ -586,7 +564,7 @@ void Gimbal_Loop(void)
 //		Pitch_PosPID.fpKi = Pitch_PosPID_3.fpKi;
 //		Pitch_PosPID.fpKd = Pitch_PosPID_3.fpKd;
 //		
-	
+	}
 //	
 //	
 //						if (Pitch_encode > 14 ) // 20-40
@@ -719,9 +697,9 @@ void Gimbal_RC_Mode(void)
 	if (abs(DR16_rec.stRC.Ch0 - RC_CH_VALUE_OFFSET) < RC_CH_VALUE_DEAD)
 		DR16_rec.stRC.Ch0 = RC_CH_VALUE_OFFSET;
 
-	PitchPos_Reference += (FP32)(DR16_rec.stRC.Ch1 - RC_CH_VALUE_OFFSET) * RCSST_Pitch;
+	PitchPos_Reference -= (FP32)(DR16_rec.stRC.Ch1 - RC_CH_VALUE_OFFSET) * RCSST_Pitch;
 
-	YawPos_Reference -= (FP32)(DR16_rec.stRC.Ch0 - RC_CH_VALUE_OFFSET) * RCSST_Yaw;
+	YawPos_Reference += (FP32)(DR16_rec.stRC.Ch0 - RC_CH_VALUE_OFFSET) * RCSST_Yaw;
 
 	RollPos_Reference = 0;
 
@@ -1253,8 +1231,8 @@ void IMU_Data_Deal(void)
 	}
 	else  
 	{
-//		Pitch_PosPID.fpFB = -imu_data.pit;
-		Pitch_PosPID.fpFB = -imu_data.rol;
+		Pitch_PosPID.fpFB = -imu_data.pit;
+		//Pitch_PosPID.fpFB = -imu_data.rol;
 	}
 
 	if (!Yaw_imu_flag)
@@ -1272,8 +1250,8 @@ void IMU_Data_Deal(void)
 		Yaw_SpeedPID.fpFB = (Gyro_Z_Real * radian);
 
 	if (Pitch_s_flag)
-//		Pitch_SpeedPID.fpFB = -(Gyro_Y_Real * radian);
-		Pitch_SpeedPID.fpFB = -(Gyro_X_Real * radian);
+		Pitch_SpeedPID.fpFB = -(Gyro_Y_Real * radian);
+		//Pitch_SpeedPID.fpFB = -(Gyro_X_Real * radian);
 	
 
 	if (Roll_s_flag)

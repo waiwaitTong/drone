@@ -133,8 +133,8 @@ void CAN1_TX_IRQHandler(void)
 
 uint16_t p_int, v_int, t_int;
 extern ST_ANGLE G_ST_IMU_Angle;
-FP32 Pitch_ZERO = -80; //-60
-FP32 Yaw_ZERO = 256;  // 180
+FP32 Pitch_ZERO = -87; //-60
+FP32 Yaw_ZERO = 110;  // 180
 FP32 Roll_ZERO = 0.0;
 /***********************************************************
 中断处理函数名称：CAN1_RX0_IRQHandler

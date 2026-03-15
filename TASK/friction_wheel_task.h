@@ -12,7 +12,7 @@
 #define Flameout    (UINT32)500 
 #define Acc_Step    (UINT32)1     
 #define friction_SMCtoPWM    (FP32) 0.005
-//#define ShootHeat_Rate     ((float)Shoot_Data.bullet_speed) 
+//#define PelletSpeed_mes     ((float)Shoot_Data.bullet_speed) 
 #define MAX_DATA_NUM    10
 #define WINDOW_DATA_NUM 8
 

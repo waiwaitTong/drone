@@ -61,7 +61,7 @@ void Vision_Tx_Protocol(void)
 //	G_ST_Vision.Send.Time_delay_Num  = 	128+Operater_Coe.Time_delay_Num;
 //  G_ST_Vision.Send.BigBuff_Pitch_error_Num = 128 + Operater_Coe.BigBuff_Pitch_error_Num;
 //	G_ST_Vision.Send.BigBuff_Yaw_error_Num = 128 + Operater_Coe.BigBuff_Yaw_error_Num;
-	G_ST_Vision.Send.PelletSpeed = SlidingWindowFilter(&bullet_speed_filter,Shoot_Data.bullet_speed);//(float)ShootHeat_Rate;
+	G_ST_Vision.Send.PelletSpeed = SlidingWindowFilter(&bullet_speed_filter,Shoot_Data.bullet_speed);//(float)PelletSpeed_mes;
 //	G_ST_Vision.Send.Vision_shutdown = (Vision_Shutdown_Cnt>=5000)?1:0;
 	
   ///UART4

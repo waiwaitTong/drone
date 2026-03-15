@@ -250,7 +250,7 @@ typedef struct
 	float m_x1;	 // 位置
 	float m_x2;	 // 速度
 	float m_x;	 // 位移
-	float m_r;	 // TD阻尼因子（决定跟踪速度，r越大，跟踪速度越快，微分预测的滤残Ч?会变差）?
+	float m_r;	 // TD阻尼因子（决定跟踪速度，r越大，跟踪速度越快，微分预测的滤残Ч岜洳睿┄
 	float m_h;	 // TD滤波因子（算法式中的h0，h0越大微分预测的滤波效果越好）
 	float m_T;	 // TD积分步长（h为步长，h越小滤波效果越好，与采样周期一致）
 	float m_aim; // 目标位置
