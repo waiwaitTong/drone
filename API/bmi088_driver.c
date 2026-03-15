@@ -46,9 +46,9 @@ FP32 Acc_Z_Offset = 0;
 //FP32	Gyro_Y_Offset =0.116354682f;
 //FP32    Gyro_Z_Offset =0.130834997f;	
 
-FP32		Gyro_X_Offset = -0.170390576f;//这个得实测，每个陀螺仪有细微的差别
-FP32		Gyro_Y_Offset = -0.146174371f;
-FP32	    Gyro_Z_Offset = 0.127867877f;		
+FP32		Gyro_X_Offset = 0.169265449f;//这个得实测，每个陀螺仪有细微的差别
+FP32		Gyro_Y_Offset = -0.131782696f;
+FP32	    Gyro_Z_Offset = 0.161412701f;		
 
 // FP32		 Gyro_X_Offset =0.101077288;
 // FP32	     Gyro_Y_Offset =0.0723787844;

@@ -63,6 +63,7 @@ void CalIWeakenPID(ST_PID *pstPid)
 
 	pstPid->fpE=pstPid->fpDes-pstPid->fpFB;//¼ÆËãµ±Ç°Æ«²î
 	
+
 	if(((pstPid->fpU <= pstPid->fpUMax && pstPid->fpE > 0) || (pstPid->fpU >= -pstPid->fpUMax && pstPid->fpE < 0)) \
 		    && abs_fl(pstPid->fpE) < pstPid->fpEMin)
 	{

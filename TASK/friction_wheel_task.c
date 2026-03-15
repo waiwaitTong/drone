@@ -1,8 +1,8 @@
 #include "friction_wheel_task.h"
 
 UCHAR8 FrictionWheel_UP_Ready = 0;
-FP32 DesSpeed1 = 5850;	 
-FP32 DesSpeed2 = 5850;	 
+FP32 DesSpeed1 = 6500;	 
+FP32 DesSpeed2 = 6500;	 
 FP32 des_single = 11200; // µ¥Î»£ºr/min
 int SpeedCompensationCnt = 0;
 // float PelletSpeed_mesProcessed = 0.0f;
