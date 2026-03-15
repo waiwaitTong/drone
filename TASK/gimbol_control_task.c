@@ -132,14 +132,23 @@ void GimbalControl(void)
 				cnt_automatic++;
 
 				if (cnt_automatic == 1)
-					Des += 3;
+					Des += 2;
 				if (cnt_automatic == 1000)
-					Des += 3;
+					Des += 2;
 				if (cnt_automatic == 2000)
-					Des -= 3;
+					Des += 2;
 				if (cnt_automatic == 3000)
-					Des -= 3;
-				if (cnt_automatic == 4000)
+					Des += 2;
+					if (cnt_automatic ==4000 )
+					Des -= 2;
+				if (cnt_automatic == 5000)
+					Des -= 2;
+				if (cnt_automatic == 6000)
+					Des -= 2;
+				if (cnt_automatic == 7000)
+					Des -= 2;
+		
+				if (cnt_automatic == 8000)
 					cnt_automatic = 0;
 			}
 			if (automatic1 == 1)
