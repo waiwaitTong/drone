@@ -1,0 +1,15 @@
+* [33mf2f0910[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;32moriginal[m[33m)[m orginal
+*   [33mb242028[m[33m ([m[1;31morigin/main[m[33m)[m Merge branch 'main' of https://github.com/waiwaitTong/drone
+[32m|[m[33m\[m  
+[32m|[m * [33m2d4f731[m Add new section for 创世神: 汪琳博 尤艺潼
+[32m|[m * [33mf6a54ae[m Initial commit
+* [33m558482b[m first commit
+* [33mf60c32e[m 第一版热量
+* [33mdfc5195[m 量 控制码 第一版
+* [33mbf6c8bf[m 删除画血量
+* [33m66d57f7[m 修正小错
+* [33m261ea1e[m 修改老代码与dji通信冲突，热量控制准备
+* [33m20aafc5[m ower
+* [33m9d02551[m 热量控制及裁判系统部分代码
+* [33m104e8c4[m 拨盘任务代码部分重构
+* [33ma7c2949[m[33m ([m[1;32mmaster[m[33m)[m 初始化
