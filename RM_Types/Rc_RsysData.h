@@ -36,16 +36,16 @@ typedef union
 /** 机器人血量数据：0x0003   发送频率：1Hz
  * @brief	提供各队机器人血量数据
  */
-typedef _packed struct 
+typedef __packed struct 
 {  
-uint16_t ally_1_robot_HP;  
-uint16_t ally_2_robot_HP;  
-uint16_t ally_3_robot_HP;  
-uint16_t ally_4_robot_HP;  
-uint16_t reserved;  
-uint16_t ally_7_robot_HP;  
-uint16_t ally_outpost_HP;  
-uint16_t ally_base_HP; 
+	USHORT16 red_1_robot_HP;
+	USHORT16 red_2_robot_HP;
+	USHORT16 red_3_robot_HP;
+	USHORT16 red_4_robot_HP; 
+	USHORT16 reservedhp;  
+	USHORT16 red_7_robot_HP; 
+	USHORT16 red_outpost_HP;  
+	USHORT16 red_base_HP; 
 } ext_game_robot_HP_t;
 typedef union
 {
@@ -170,9 +170,9 @@ typedef union
 /** 实时功率热量数据：0x0202  发送频率：10Hz */
 typedef __packed struct
 {
-	uint16_t reserved; 
-	uint16_t reserved; 
-	float reserved; 
+	uint16_t reserved1; 
+	uint16_t reserved2; 
+	float reserved3; 
 	uint16_t buffer_energy; 
 	uint16_t shooter_17mm_1_barrel_heat; //第一个发射机构的射击热量
 	uint16_t shooter_42mm_barrel_heat; 
