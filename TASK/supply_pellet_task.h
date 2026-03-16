@@ -17,6 +17,7 @@ void SupplyMotor_Single_Mode(void);
 void HappyShooting(void);
 void Shoot_freq_calculate(void);
 void SupplyImage_Speed_Mode(void);
+bool Is_Heat_Safe(void);
 
 extern float Bullet_prespeed  ;
 extern int Bullet_num_actaul ;
