@@ -131,10 +131,9 @@ extern DBUS_BUFF Mouse_Y;
 
 /*---------------------------------裁判系统---------------------------------------------------*/
 extern ST_RSYS_MONITOR RSYS_Monitor ;
-extern ext_aerial_robot_energy_t Drone_Energy       ;  //能量积累 攻击时间
 extern ext_shoot_data_t          Shoot_Data         ;  //射击状态
 extern ext_game_robot_pos_t      Drone_Pos          ;  //空间位置
-extern ext_power_heat_data_t     Shoot_Current      ;  //snail电机电流
+extern ext_power_heat_data_t     Shoot_Power        ;  //热量状态
 extern ext_game_robot_state_t    Drone_State        ;  //发射机构供电状态 友方阵营
 extern UN_Custom_Robo            Custom_Robo_Data   ;  //机器人自定义交互数据  代码里没用到
 extern UN_Custom_Client          Custom_Client_Data ;  //客户端显示数据        代码里没用到

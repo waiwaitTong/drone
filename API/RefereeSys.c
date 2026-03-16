@@ -535,17 +535,14 @@ void MonitorDataDeal(USHORT16 usCmdID)
 		RSYS_Monitor.GameRobotStatus_cnt++;
 		break;
 	case Power_Data_ID:
-		memcpy(&Shoot_Current, &USART2_Rx_Buf[7], usDataLength);
+		memcpy(&Shoot_Power, &USART2_Rx_Buf[7], usDataLength);
 		RSYS_Monitor.PowerHeatData_cnt++;
 		break;
 	case Robot_Pos_ID:
 		memcpy(&Drone_Pos, &USART2_Rx_Buf[7], usDataLength);
 		RSYS_Monitor.GameRobotPos_cnt++;
 		break;
-	case Drone_Energy_ID:
-		memcpy(&Drone_Energy, &USART2_Rx_Buf[7], usDataLength);
-		RSYS_Monitor.AerialRobotEnergy_cnt++;
-		break;
+
 	case Shoot_Data_ID:
 		memcpy(&Shoot_Data, &USART2_Rx_Buf[7], usDataLength);
 		RSYS_Monitor.ShootData_cnt++;
